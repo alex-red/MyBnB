@@ -1,6 +1,6 @@
 # mybnb
 
-> AirBnB Clone
+> AirBnB Clone using Java (Spark) backend with MySql.
 
 ## Build Setup
 
