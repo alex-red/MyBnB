@@ -1,25 +1,32 @@
-<template>
-  <div id="app">
-    <img class="logo" src="./assets/logo.png">
-    <hello></hello>
-    <p>
-      Welcome to your Vue.js app!
-    </p>
-    <p>
-      To get a better understanding of how this boilerplate works, check out
-      <a href="http://vuejs-templates.github.io/webpack" target="_blank">its documentation</a>.
-      It is also recommended to go through the docs for
-      <a href="http://webpack.github.io/" target="_blank">Webpack</a> and
-      <a href="http://vuejs.github.io/vue-loader/" target="_blank">vue-loader</a>.
-      If you have any issues with the setup, please file an issue at this boilerplate's
-      <a href="https://github.com/vuejs-templates/webpack" target="_blank">repository</a>.
-    </p>
-    <p>
-      You may also want to checkout
-      <a href="https://github.com/vuejs/vue-router/" target="_blank">vue-router</a> for routing and
-      <a href="https://github.com/vuejs/vuex/" target="_blank">vuex</a> for state management.
-    </p>
-  </div>
+<template lang="pug">
+  mixin menuItems
+    li: a: b Login
+    li: a: b Sign Up
+
+  nav.color-primary.z-depth-1
+    .nav-wrapper
+      a.brand-logo
+        b MyBnB
+      a(href="#" @click="toggle").button-collapse
+        i.material-icons menu
+      ul.right.hide-on-med-and-down
+        +menuItems
+
+  side-nav( :is-opened.sync="opened" v-ref:side-nav )
+    +menuItems
+
+  .intro-bar
+    img(src="./assets/intro_bar2.jpg")
+  .main.container.center
+    .section
+    .row.intro
+      .col.m8.s12.media
+        h4.label.left Toronto 
+        img.responsive-img.z-depth-2(src="https://c2.staticflickr.com/8/7386/8727883772_13c295e24d_b.jpg")
+      .col.m4.s12.description
+        p.left-align Toronto, Ontario's capital city, has a vibrant history of change and growth, ranging from its early occupation over 1,000 years ago to its current status as North America’s fourth largest city. Toronto is Canada's largest municipality and is made up of the former cities of Toronto, North York, Scarborough, York and Etobicoke, and the former borough of East York. The city is home to a large immigrant population, and is a national and international hub for finance, communications and cultural life.
+    hello
+
 </template>
 
 <script>
@@ -27,38 +34,71 @@ import Hello from './components/Hello'
 
 export default {
   components: {
-    Hello
+    Hello,
+    'side-nav': require('vue-materialize/side-nav')
+  },
+
+  data () {
+    return {
+      opened: true
+    }
+  },
+
+  methods: {
+    toggle () {
+      this.opened = !this.opened
+    }
+  },
+
+  ready () {
+
   }
 }
+
 </script>
 
-<style>
-html {
-  height: 100%;
-}
+<style lang="stylus">
+// @import url(https://fonts.googleapis.com/css?family=Source+Code+Pro)
 
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
+html
+  height: 100%
+  
+body
+  height: 100%
+  
+.main
+  // border 1px solid black
+  padding 1em 1em
+  font-family 'Source Code Pro'
 
-#app {
-  color: #2c3e50;
-  margin-top: -100px;
-  max-width: 600px;
-  font-family: Source Sans Pro, Helvetica, sans-serif;
-  text-align: center;
-}
+.no-padding
+  padding 0 !important
+.no-margin
+  margin 0 !important
 
-#app a {
-  color: #42b983;
-  text-decoration: none;
-}
+.color-primary
+  color #01579b !important
+  background-color #01579b !important
 
-.logo {
-  width: 100px;
-  height: 100px
-}
+.intro
+  .media
+    .label
+      font-weight 500
+    img
+      height 400px
+  .description
+    margin-top 3.5em
+
+.intro-bar
+  height 150px
+  background-color black
+  img
+    width 100%
+    height 150px
+
+</style>
+
+<style lang="stylus" scoped>
+.brand-logo
+  margin-left .5em
 </style>
