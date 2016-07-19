@@ -8,7 +8,7 @@ export function configRouter (router) {
     },
 
     '/': {
-      component: require('./App.vue')
+      component: require('./components/Dashboard.vue')
     }
     // advanced example
 

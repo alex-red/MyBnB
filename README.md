@@ -2,26 +2,15 @@
 
 > AirBnB Clone using Java (Spark) backend with MySql.
 
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
+# Backend Install
+## MySQL 5.7
+```
+sudo apt-get install mysql-server
+mysql -u root -p
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+# SQL Setup
+```sql
+mysql -u root --password='root' < mybnb_schema.sql
+```
+
