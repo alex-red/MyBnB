@@ -1,7 +1,7 @@
 <template lang="pug">
   mixin menuItems
-    li: a: b Login
-    li: a: b Sign Up
+    li: a(href="#"): b Login
+    li: a(href="#"): b Sign Up
 
   nav.color-primary.z-depth-1
     .nav-wrapper
@@ -21,7 +21,7 @@
     .section
     .row.intro
       .col.m8.s12.media
-        h4.label.left Toronto 
+        h4.label.left-align Toronto 
         img.responsive-img.z-depth-2(src="https://c2.staticflickr.com/8/7386/8727883772_13c295e24d_b.jpg")
       .col.m4.s12.description
         p.left-align Toronto, Ontario's capital city, has a vibrant history of change and growth, ranging from its early occupation over 1,000 years ago to its current status as North America’s fourth largest city. Toronto is Canada's largest municipality and is made up of the former cities of Toronto, North York, Scarborough, York and Etobicoke, and the former borough of East York. The city is home to a large immigrant population, and is a national and international hub for finance, communications and cultural life.
@@ -69,7 +69,7 @@ body
 .main
   // border 1px solid black
   padding 1em 1em
-  font-family 'Source Code Pro'
+  font-family 'Source Code Pro',;
 
 .no-padding
   padding 0 !important
