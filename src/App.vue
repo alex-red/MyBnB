@@ -1,15 +1,11 @@
 <template lang="pug">
   mixin menuItems
-    li: a(href="#")
+    li: a(href="#loginModal" data-target="loginModal").modal-trigger
       b Login
-      modal
-        .modal-content
-          h4 Login
-        .modal-footer
-          button.btn(@click="closeModal") close
-
     li: a(href="#"): b Sign Up
+    li: a(href="#" @click="dev"): b DEV
 
+  login-modal
   nav.color-primary.z-depth-1
     .nav-wrapper
       a.brand-logo
@@ -31,26 +27,25 @@
 
 <script>
 import Hello from './components/Hello'
+import LoginModal from './components/LoginModal'
 
 export default {
   components: {
     Hello,
-    'side-nav': require('vue-materialize/side-nav'),
-    'modal': require('vue-materialize/modal')
+    LoginModal
   },
 
   data () {
     return {
+      state: Store.state,
       opened: false
     }
   },
 
   methods: {
-    toggle () {
-      this.opened = !this.opened
-    },
-    closeModal () {
-      this.$broadcast('close')
+    dev () {
+      console.log('DEV')
+      console.log(this.state)
     }
   },
 
@@ -63,12 +58,13 @@ export default {
 
 <style lang="stylus">
 // @import url(https://fonts.googleapis.com/css?family=Source+Code+Pro)
-
 html
   height: 100%
   
 body
   height: 100%
+.modal
+  overflow hidden !important
   
 .main
   // border 1px solid black
@@ -81,10 +77,9 @@ body
   margin 0 !important
 
 .color-primary
-  color #01579b !important
   background-color #01579b !important
-
-
+.color-primary-text
+  color #01579b !important
 </style>
 
 <style lang="stylus" scoped>

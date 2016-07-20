@@ -13,6 +13,7 @@
   "dependencies": {
     "babel-runtime": "^6.0.0",
     "vue": "^1.0.21",
+    "vue-resource": "^0.9.3",
     "vue-router": "^0.7.13"
   },
   "devDependencies": {
@@ -48,7 +49,6 @@
     "vue-hot-reload-api": "^1.2.0",
     "vue-html-loader": "^1.0.0",
     "vue-loader": "^8.3.0",
-    "vue-materialize": "^0.1.14",
     "vue-style-loader": "^1.0.0",
     "vue-touch": "^1.1.0",
     "webpack": "^1.12.2",
