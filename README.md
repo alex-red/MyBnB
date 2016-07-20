@@ -11,6 +11,6 @@ mysql -u root -p
 
 # SQL Setup
 ```sql
-mysql -u root --password='root' < mybnb_schema.sql
+sh mybnb_init_db.sh
 ```
 
