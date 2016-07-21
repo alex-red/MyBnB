@@ -1,6 +1,8 @@
 <template lang="pug">
+.intro-bar.no-padding.no-margin
+  img(src="../assets/intro_bar2.jpg")
 .section
-.row.intro
+.row.intro.center.container
   .col.m8.s12.media
     h4.label Toronto 
     img.responsive-img.z-depth-2(src="https://c2.staticflickr.com/8/7386/8727883772_13c295e24d_b.jpg")

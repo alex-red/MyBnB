@@ -15,6 +15,12 @@ const router = new Router({history: true})
 
 configRouter(router)
 
-window.Store = Store
+Vue.filter('titlecase', (val) => {
+  return val.replace(/\w\S*/g, (txt) => {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+  })
+})
 
+window.Vue = Vue
+window.Store = Store
 router.start(App, 'app')

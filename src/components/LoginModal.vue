@@ -19,7 +19,7 @@
     button.btn(@click="loginSubmit" type="submit").color-primary submit
       i.material-icons.right send
     button.btn(@click="closeModal").color-primary close
-    button.btn-flat(@click="closeModal") register
+    button.btn-flat(@click="registerPress") register
 </template>
 
 <script>
@@ -57,11 +57,6 @@ export default {
           return false
         }
       })
-      // this.$http.post('http://192.168.0.11:5000/login', {}, { params: {data: this.inputs} }).then((res) => {
-      //   console.log(res.json())
-      // }, (res) => {
-      //   console.log('Error occured', res)
-      // })
     },
     closeModal () {
       this.inputs.user_email = ''
@@ -69,8 +64,9 @@ export default {
       this.inputs.error = false
       $('#loginModal').closeModal()
     },
-    beforeClose () {
-      console.log('beforeee')
+    registerPress () {
+      $('#loginModal').closeModal()
+      $('#signUpModal').openModal()
     }
   },
 

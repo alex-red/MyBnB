@@ -48,7 +48,7 @@
 
     span.error-text(v-show="inputs.error") Could not sign up! Please check your entries.
   .modal-footer
-    button.btn(type="submit").color-primary submit
+    button.btn(@click="signupSubmit" type="submit").color-primary submit
       i.material-icons.right send
     button.btn(@click="closeModal").color-primary close
 </template>
@@ -70,6 +70,7 @@ export default {
         user_sin: '',
         user_address: '',
         user_name: '',
+        user_occupation: '',
         error: false
       },
       server: new Server(this)
@@ -78,13 +79,39 @@ export default {
 
   methods: {
     closeModal () {
-      this.inputs.user_email = ''
-      this.inputs.user_password = ''
+      for (let i in this.inputs) {
+        if (i !== 'error') {
+          this.inputs[i] = ''
+        }
+      }
       this.inputs.error = false
       $('#signUpModal').closeModal()
     },
     signupSubmit () {
-      console.log('submit')
+      for (let i in this.inputs) {
+        if (!this.inputs[i] && i !== 'error') {
+          this.inputs.error = true
+          Materialize.toast('Please fill in all form inputs!', 5000)
+          return false
+        }
+      }
+      let vm = this
+      vm.server.signup(this.inputs).then((res) => {
+        if (res) {
+          vm.server.getUser(res).then((res) => {
+            if (res) {
+              vm.state.user = res
+              vm.$dispatch('loggedIn')
+              vm.closeModal()
+              return true
+            }
+          })
+        } else {
+          vm.inputs.error = true
+          return false
+        }
+      })
+      return true
     }
   },
 

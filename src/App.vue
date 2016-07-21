@@ -1,15 +1,21 @@
 <template lang="pug">
   mixin menuItems
-    li: a(href="#loginModal" data-target="loginModal").loginModalTrigger
-      b Login
-    li: a(href="#signUpModal").signUpModalTrigger: b Sign Up
+    template(v-if="!loggedIn")
+      li: a(href="#loginModal" data-target="loginModal").loginModalTrigger
+        b Login
+      li: a(href="#signUpModal").signUpModalTrigger: b Sign Up
+    template(v-if="loggedIn")
+      li.account-button
+        a(href="#")
+          i.material-icons.left account_circle
+          b {{state.user.name | titlecase }}
     li: a(href="#" @click="dev"): b DEV
 
   login-modal
   sign-up-modal
   nav.color-primary.z-depth-1
     .nav-wrapper
-      a.brand-logo
+      a.brand-logo(v-link="'/'")
         b MyBnB
       a(href="#" data-activates="side-nav").button-collapse
         i.material-icons menu
@@ -18,9 +24,7 @@
       ul.side-nav#side-nav
         +menuItems
 
-  .intro-bar
-    img(src="./assets/intro_bar2.jpg")
-  .main.container.center
+  .main
     router-view
 
 </template>
@@ -49,6 +53,7 @@ export default {
     loggedIn () {
       console.log('User has logged in.')
       this.loggedIn = true
+      Materialize.toast(`Welcome ${this.state.user.name}!`, 5000)
     }
   },
 
@@ -78,7 +83,7 @@ body
   
 .main
   // border 1px solid black
-  padding 1em 1em
+  // padding 1em 1em
   font-family 'Source Code Pro',;
 
 .no-padding
@@ -95,8 +100,7 @@ body
 <style lang="stylus" scoped>
 .brand-logo
   margin-left .5em
-.intro-bar
-  img
-    width 100%
-    height 150px
+.account-button
+  .btn-flat
+    color white !important
 </style>
