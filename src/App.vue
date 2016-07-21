@@ -1,22 +1,22 @@
 <template lang="pug">
   mixin menuItems
-    li: a(href="#loginModal" data-target="loginModal").modal-trigger
+    li: a(href="#loginModal" data-target="loginModal").loginModalTrigger
       b Login
-    li: a(href="#"): b Sign Up
+    li: a(href="#signUpModal").signUpModalTrigger: b Sign Up
     li: a(href="#" @click="dev"): b DEV
 
   login-modal
+  sign-up-modal
   nav.color-primary.z-depth-1
     .nav-wrapper
       a.brand-logo
         b MyBnB
-      a(href="#" @click="toggle").button-collapse
+      a(href="#" data-activates="side-nav").button-collapse
         i.material-icons menu
       ul.right.hide-on-med-and-down
         +menuItems
-
-  side-nav( :is-opened.sync="opened" v-ref:side-nav )
-    +menuItems
+      ul.side-nav#side-nav
+        +menuItems
 
   .intro-bar
     img(src="./assets/intro_bar2.jpg")
@@ -28,17 +28,27 @@
 <script>
 import Hello from './components/Hello'
 import LoginModal from './components/LoginModal'
+import SignUpModal from './components/SignUpModal'
 
 export default {
   components: {
     Hello,
-    LoginModal
+    LoginModal,
+    SignUpModal
   },
 
   data () {
     return {
       state: Store.state,
-      opened: false
+      opened: false,
+      loggedIn: false
+    }
+  },
+
+  events: {
+    loggedIn () {
+      console.log('User has logged in.')
+      this.loggedIn = true
     }
   },
 
@@ -50,7 +60,9 @@ export default {
   },
 
   ready () {
-
+    $(document).ready(() => {
+      $('.button-collapse').sideNav()
+    })
   }
 }
 
@@ -63,8 +75,6 @@ html
   
 body
   height: 100%
-.modal
-  overflow hidden !important
   
 .main
   // border 1px solid black
@@ -85,4 +95,8 @@ body
 <style lang="stylus" scoped>
 .brand-logo
   margin-left .5em
+.intro-bar
+  img
+    width 100%
+    height 150px
 </style>

@@ -1,12 +1,13 @@
-# mybnb
+# MyBnB
 
-> AirBnB Clone using Java (Spark) backend with MySql.
+AirBnB Clone using Java (Spark) backend with MySql. VueJS + Materialize for the frontend.
 
 # Backend Install
 ## MySQL 5.7
 ```
 sudo apt-get install mysql-server
-mysql -u root -p
+user: root
+password: root
 ```
 
 # SQL Setup

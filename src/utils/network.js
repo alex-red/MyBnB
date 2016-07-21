@@ -27,9 +27,7 @@ export default class Server {
   getUser (userId) {
     return this.http.get(this.serverHost + '/users/' + userId).then((res) => {
       let data = res.json()
-      console.log(data)
       if (typeof data !== 'undefined' && data.length > 0) {
-        console.log(data)
         return data[0]
       } else {
         return null

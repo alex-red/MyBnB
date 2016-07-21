@@ -5,11 +5,13 @@ USE mybnb;
 DROP TABLE IF EXISTS users, auth, listings, calendar, bookings, credit_cards;
 
 CREATE TABLE users (
-  user_id varchar(36),
+  user_id varchar(36) not null,
   PRIMARY KEY(user_id),
   name varchar(200) not null,
   address varchar(200),
   dob date not null,
+  country varchar(200) not null,
+  zipcode varchar(32),
   occupation varchar(200),
   SIN varchar(9)
 );
@@ -22,7 +24,7 @@ CREATE TABLE auth (
 );
 
 CREATE TABLE listings (
-  listing_id varchar(36),
+  listing_id varchar(36) not null,
   PRIMARY KEY(listing_id),
   user_id varchar(36) references users(user_id),
   title varchar(200) not null,
@@ -35,14 +37,14 @@ CREATE TABLE listings (
 );
 
 CREATE TABLE calendar (
-  calendar_id varchar(36),
+  calendar_id varchar(36) not null,
   PRIMARY KEY(calendar_id),
   date date not null,
   listing_id varchar(36) references listings(listing_id)
 );
 
 CREATE TABLE bookings (
-  booking_id varchar(36),
+  booking_id varchar(36) not null,
   PRIMARY KEY(booking_id),
   host_id varchar(36) references users(user_id),
   renter_id varchar(36) references users(user_id),
@@ -52,7 +54,7 @@ CREATE TABLE bookings (
 );
 
 CREATE TABLE credit_cards (
-  card_id varchar(36),
+  card_id varchar(36) not null,
   PRIMARY KEY(card_id),
   user_id varchar(36) references users(user_id),
   card_number varchar(20)  not null,

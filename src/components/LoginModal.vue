@@ -47,6 +47,9 @@ export default {
           vm.server.getUser(res).then((res) => {
             if (res) {
               vm.state.user = res
+              vm.$dispatch('loggedIn')
+              vm.closeModal()
+              return true
             }
           })
         } else {
@@ -74,7 +77,7 @@ export default {
   ready () {
     let that = this
     $(document).ready(function () {
-      $('.modal-trigger').leanModal({
+      $('.loginModalTrigger').leanModal({
         complete: () => {
           that.closeModal()
         }
@@ -85,6 +88,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.modal
+  overflow hidden !important
 .modal-content
   .close-btn
     background-color black
