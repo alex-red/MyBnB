@@ -1,5 +1,7 @@
 <template lang="pug">
   mixin menuItems
+    li: a(v-link="'/'"): b Home
+    li: a(v-link="'listings'"): b Browse
     template(v-if="!loggedIn")
       li: a(href="#loginModal" data-target="loginModal").loginModalTrigger
         b Login
@@ -13,16 +15,17 @@
 
   login-modal
   sign-up-modal
-  nav.color-primary.z-depth-1
-    .nav-wrapper
-      a.brand-logo(v-link="'/'")
-        b MyBnB
-      a(href="#" data-activates="side-nav").button-collapse
-        i.material-icons menu
-      ul.right.hide-on-med-and-down
-        +menuItems
-      ul.side-nav#side-nav
-        +menuItems
+  .navbar-fixed
+    nav.color-primary.z-depth-1
+      .nav-wrapper
+        a.brand-logo(v-link="'/'")
+          b MyBnB
+        a(href="#" data-activates="side-nav").button-collapse
+          i.material-icons menu
+        ul.right.hide-on-med-and-down
+          +menuItems
+        ul.side-nav#side-nav
+          +menuItems
 
   .main
     router-view
@@ -66,7 +69,9 @@ export default {
 
   ready () {
     $(document).ready(() => {
-      $('.button-collapse').sideNav()
+      $('.button-collapse').sideNav({
+        closeOnClick: true
+      })
     })
   }
 }
@@ -77,13 +82,15 @@ export default {
 // @import url(https://fonts.googleapis.com/css?family=Source+Code+Pro)
 html
   height: 100%
-  
+  overflow hidden
 body
+  padding-bottom 64px
   height: 100%
-  
 .main
   // border 1px solid black
   // padding 1em 1em
+  height 100%
+  position relative
   font-family 'Source Code Pro',;
 
 .no-padding

@@ -9,6 +9,10 @@ export function configRouter (router) {
 
     '/': {
       component: require('./components/Dashboard.vue')
+    },
+
+    '/listings': {
+      component: require('./components/Listings.vue')
     }
     // advanced example
 

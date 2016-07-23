@@ -32,10 +32,14 @@
           input(id="user_sin" type="text" v-model="inputs.user_sin")
           label(for="user_sin") SIN/SSN
       .row
-        .input-field.col.s12
+        .input-field.col.s12.m6
           i.material-icons.prefix edit_location
           input(id="user_address" type="text" v-model="inputs.user_address" )
           label(for="user_address") Address
+        .input-field.col.s12.m6
+          i.material-icons.prefix map
+          input(id="user_city" type="text" v-model="inputs.user_city" )
+          label(for="user_city") City
       .row
         .input-field.col.s12.m6
           i.material-icons.prefix satellite
@@ -55,6 +59,7 @@
 
 <script>
 import Server from '../utils/network'
+import moment from 'moment'
 
 export default {
   data () {
@@ -69,6 +74,7 @@ export default {
         user_dob: '',
         user_sin: '',
         user_address: '',
+        user_city: '',
         user_name: '',
         user_occupation: '',
         error: false
@@ -93,6 +99,8 @@ export default {
           this.inputs.error = true
           Materialize.toast('Please fill in all form inputs!', 5000)
           return false
+        } else if (i === 'user_dob') {
+          this.inputs[i] = moment(new Date(this.inputs[i])).format('YYYY-MM-DD')
         }
       }
       let vm = this
@@ -125,10 +133,15 @@ export default {
       })
       let date = new Date()
       $('#user_dob').pickadate({
+        onSet: function (arg) {
+          if ('select' in arg) {
+            this.close()
+          }
+        },
         container: 'body',
         selectMonths: true,
         selectYears: 50,
-        format: 'yyyy-mm-dd',
+        // format: 'yyyy-mm-dd',
         formatSubmit: 'yyyy-mm-dd',
         max: [date.getFullYear() - 18, date.getUTCMonth(), date.getUTCDate()]
       })

@@ -4,7 +4,6 @@ import Router from 'vue-router'
 import Resource from 'vue-resource'
 import { Store } from './utils/store'
 import { configRouter } from './router-config'
-// import 'vue-materialize/node_modules/materialize-css/dist/css/materialize.min.css'
 
 Vue.use(require('vue-touch'))
 Vue.use(Router)

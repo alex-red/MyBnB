@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS mybnb;
 
 USE mybnb;
 
-DROP TABLE IF EXISTS users, auth, addresses, listings, calendar, bookings, credit_cards;
+DROP TABLE IF EXISTS users, auth, addresses, listings, calendar, comments, bookings, credit_cards;
 
 CREATE TABLE users (
   user_id char(36) not null,
@@ -23,9 +23,11 @@ CREATE TABLE auth (
 CREATE TABLE addresses (
   address_id char(36) not null,
   PRIMARY KEY(address_id),
+  owner_id char(36) not null references users(user_id),
   address varchar(200) not null,
   coordinates JSON,
-  country varchar(200) not null,
+  city varchar(100) not null,
+  country varchar(100) not null,
   zipcode varchar(32) not null
 );
 
@@ -33,22 +35,29 @@ CREATE TABLE listings (
   listing_id char(36) not null,
   PRIMARY KEY(listing_id),
   address_id char(36) references addresses(address_id),
-  available bool not null,
+  user_id char(36) references users(user_id),
+  amenities JSON,
   available_dates JSON,
   comments JSON,
-  date date,
   description varchar(200) not null,
   price varchar(32) not null,
-  title varchar(200) not null,
-  type varchar(10),
-  user_id char(36) references users(user_id)
+  room_type varchar(10) not null,
+  rooms varchar(10) not null,
+  date date,
+  title varchar(200) not null
 );
 
 CREATE TABLE calendar (
-  calendar_id char(36) not null,
-  PRIMARY KEY(calendar_id),
   date date not null,
-  listing_id char(36) references listings(listing_id)
+  PRIMARY KEY(date),
+  listings JSON
+);
+
+CREATE TABLE comments (
+  comment_id char(36) not null,
+  user_id char(36) references users(user_id),
+  PRIMARY KEY(comment_id, user_id),
+  comment varchar(500) not null
 );
 
 CREATE TABLE bookings (
