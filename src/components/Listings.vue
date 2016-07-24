@@ -42,7 +42,7 @@
         .col.s12.priceRangeSliderContainer
           #priceRangeSlider
         .row.center
-          button.btn(@click.prevent="" style="margin-top: 2em !important;") Submit
+          button.btn(@click.prevent="" style="margin-top: 2em !important;") Search
       .divider
     .section
     template(v-for="listing of listings" track-by="listing_id")
@@ -79,10 +79,27 @@ export default {
     }
   },
 
+  events: {
+    mapPress (coordinates) {
+      this.map.setCenter(coordinates)
+    }
+  },
+
   methods: {
     updatePriceRange (values, handle, unencoded, tap, position) {
       this.inputs.filter_pricerange = [parseInt(values[0].replace('$', '')),
                                       parseInt(values[1].replace('$', ''))]
+    },
+    handleSearchInput (place) {
+      console.log(place)
+      // If the place has a geometry, then present it on a map.
+      if (place.geometry && place.geometry.viewport) {
+        this.map.fitBounds(place.geometry.viewport)
+        this.map.setZoom(13)
+      } else {
+        this.map.setCenter(place.geometry.location)
+        this.map.setZoom(13)
+      }
     }
   },
 
@@ -129,6 +146,15 @@ export default {
         zoom: 10
       })
 
+      // Init search bar
+      let searchBars = document.getElementsByClassName('searchInput')
+      for (let searchBar of searchBars) {
+        let _search = new google.maps.places.Autocomplete(searchBar)
+        _search.addListener('place_changed', () => {
+          vm.handleSearchInput(_search.getPlace())
+        })
+      }
+
       // Load addresses
       vm.server.getAddresses().then((res) => {
         vm.state.addresses = res
@@ -136,20 +162,31 @@ export default {
         // Load our listings
         vm.server.getListings().then((res) => {
           vm.listings = res
-          for (let listing of res) {
+          for (let listing of vm.listings) {
             let address = vm.server.getAddressById(listing.address_id)
-            console.log(address)
+            listing.address = address
             if (!address || !address.coordinates) { continue }
-            let coordinates = {
-              lat: parseFloat(address.coordinates[0]),
-              lng: parseFloat(address.coordinates[1])
-            }
-            let marker = new google.maps.Marker({
-              position: coordinates,
+            let infoWindow = new google.maps.InfoWindow({
+              content: `
+                <b> ${listing.title} </b>
+              `
+            })
+
+            let marker = new MarkerWithLabel({
+              position: address.mapCoordinates,
               map: vm.map,
-              title: listing.title
+              title: listing.title,
+              labelContent: `$${listing.price}`,
+              labelAnchor: new google.maps.Point(22, 0),
+              labelClass: 'map-label'
+            })
+            marker.addListener('click', () => {
+              infoWindow.open(vm.map, marker)
             })
           }
+        }).then(() => {
+          // Set map back to Toronto
+          vm.map.setCenter(toronto)
         })
       })
     })
@@ -190,10 +227,8 @@ export default {
 .mapContainer
   height 93vh
   width 100%
-  background-color red
   #map
     height 100%
-    background-color red
 </style>
 
 <style lang='stylus'>
@@ -204,4 +239,15 @@ export default {
 .range-label span
   font-size 8px !important
   padding-left 5px
+
+.map-label
+  font-size 18px
+  font-weight 600
+  color white
+  background #F76458
+  padding 2px
+  padding-right 4px !important
+  margin-top -2.5em !important
+  margin-left -25px !important
+  border-radius 5px
 </style>

@@ -63,12 +63,53 @@ export default class Server {
     return this.http.get(this.serverHost + '/listings').then((res) => {
       let data = res.json()
       if (typeof data !== 'undefined' && data && data.length > 0) {
+        Store.state.listings = data
         return data
       } else {
         return null
       }
     }, (res) => {
       return null
+    })
+  }
+
+  getAddressByListingId (id) {
+    let that = this
+    return new Promise((resolve, reject) => {
+      try {
+        if (this.state.addresses) {
+          let res = this.state.addresses.filter(address => address.address_id === id)
+          resolve(res[0])
+        } else {
+          this.getAddresses().then(() => {
+            let res = this.state.addresses.filter(address => address.address_id === id)
+            resolve(res[0])
+          })
+        }
+      } catch (e) {
+        console.log(`Error: ${e}`)
+        reject(e)
+      }
+    })
+  }
+
+  getListingById (id) {
+    let that = this
+    return new Promise((resolve, reject) => {
+      try {
+        if (this.state.listings) {
+          let res = this.state.listings.filter(listing => listing.listing_id === id)
+          resolve(res[0])
+        } else {
+          this.getListings().then(() => {
+            let res = this.state.listings.filter(listing => listing.listing_id === id)
+            resolve(res[0])
+          })
+        }
+      } catch (e) {
+        console.log(`Error: ${e}`)
+        reject(e)
+      }
     })
   }
 
@@ -80,8 +121,13 @@ export default class Server {
       let data = res.json()
       for (let obj of data) {
         obj.coordinates = obj.coordinates ? JSON.parse(obj.coordinates) : null
+        obj.mapCoordinates = obj.coordinates ? {
+          lat: parseFloat(obj.coordinates[0]),
+          lng: parseFloat(obj.coordinates[1])
+        } : null
       }
       if (typeof data !== 'undefined' && data && data.length > 0) {
+        Store.state.addresses = data
         return data
       } else {
         return null
@@ -92,12 +138,19 @@ export default class Server {
   }
 
   getAddressById (id) {
-    if (this.state.addresses) {
-      let res = this.state.addresses.filter(addr => addr.address_id === id)
-      if (res) {
+    try {
+      if (this.state.addresses) {
+        let res = this.state.addresses.filter(addr => addr.address_id === id)
         return res[0]
+      } else {
+        this.getAddresses().then(() => {
+          let res = this.state.addresses.filter(addr => addr.address_id === id)
+          return res[0]
+        })
       }
+    } catch (e) {
+      console.log(`Error: ${e}`)
+      return false
     }
-    return false
   }
 }

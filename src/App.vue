@@ -1,7 +1,14 @@
 <template lang="pug">
   mixin menuItems
+    li.search(v-show="$route.name === 'listings'")
+      form(@submit.prevent='')
+        .input-field
+          input.searchInput(type="search" placeholder="Search" required)
+          label(for="search")
+              i.material-icons search
+          i.material-icons close
     li: a(v-link="'/'"): b Home
-    li: a(v-link="'listings'"): b Browse
+    li: a(v-link="'/listings'"): b Browse
     template(v-if="!loggedIn")
       li: a(href="#loginModal" data-target="loginModal").loginModalTrigger
         b Login
@@ -20,9 +27,10 @@
       .nav-wrapper
         a.brand-logo(v-link="'/'")
           b MyBnB
+
         a(href="#" data-activates="side-nav").button-collapse
           i.material-icons menu
-        ul.right.hide-on-med-and-down
+        ul.nav-menu.right.hide-on-med-and-down
           +menuItems
         ul.side-nav#side-nav
           +menuItems
@@ -68,6 +76,7 @@ export default {
   },
 
   ready () {
+    let vm = this
     $(document).ready(() => {
       $('.button-collapse').sideNav({
         closeOnClick: true
@@ -102,6 +111,25 @@ body
   background-color #01579b !important
 .color-primary-text
   color #01579b !important
+  
+.nav-menu
+  .search
+    form .input-field
+      position absolute
+      left 9.5em
+      width 500px
+      height 64px !important
+      padding-top 10px
+      padding-bottom 10px
+.side-nav
+  .search
+    form .input-field
+      height 64px !important
+      padding-top 10px
+      padding-bottom 10px
+    i
+      color black !important
+
 </style>
 
 <style lang="stylus" scoped>

@@ -12,10 +12,15 @@ export function configRouter (router) {
     },
 
     '/listings': {
+      name: 'listings',
       component: require('./components/Listings.vue')
+    },
+
+    '/listings/:listing_id': {
+      name: 'listing',
+      component: require('./components/ListingView.vue')
     }
     // advanced example
-
   })
 
   // redirect

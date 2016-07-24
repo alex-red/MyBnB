@@ -2,7 +2,8 @@
 .component
   .intro-bar.no-padding.no-margin
     img(src="../assets/intro_bar2.jpg")
-  .section
+  h3.center Welcome to MyBnB!
+  p.center Experience an extraodinary adventure in the city of your choosing.
   .row.intro.center.container
     .col.m8.s12.media
       h4.label Toronto 

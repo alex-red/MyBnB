@@ -1,7 +1,7 @@
 <template lang="pug">
 .col.s12.m6
   .card.hoverable
-    a(@click="listingPress(listing)")
+    a(v-link="{ name: 'listing', params: {listing_id: listing.listing_id}}")
       .card-image
         img(v-bind:src="listingImage ? listingImage : 'http://placehold.it/400x300'")
         .title-wrapper
@@ -12,8 +12,8 @@
     .card-content
       p.truncate {{listing.description}}
     .card-action
-      a(href="#") Derp
-      a(href="#") Derp2
+      a(v-link="{ name: 'listing', params: {listing_id: listing.listing_id}}") Details
+      a(@click.prevent="mapPress(listing)" href="#") Map
 </template>
 
 <script>
@@ -29,6 +29,9 @@ export default {
   methods: {
     listingPress (ctx) {
       console.log(ctx)
+    },
+    mapPress (listing) {
+      this.$dispatch('mapPress', listing.address.mapCoordinates)
     }
   },
 
@@ -59,6 +62,8 @@ export default {
       line-height 20px !important
       text-shadow 1px 1px black
   .card-image
+    :hover
+      cursor pointer
     img
       min-height 300px !important
       max-height 300px !important
