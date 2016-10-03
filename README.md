@@ -15,3 +15,10 @@ password: root
 sh mybnb_init_db.sh
 ```
 
+# Frontend Install
+```
+npm install
+npm run dev
+Go to http://localhost:8080
+```
+
