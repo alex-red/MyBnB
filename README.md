@@ -36,14 +36,25 @@ Go to http://localhost:8080
 
 # Screenshots
 
-![](/screenshots/ss (1).png)
-![](/screenshots/ss (2).png)
-![](/screenshots/ss (3).png)
-![](/screenshots/ss (4).png)
-![](/screenshots/ss (5).png)
-![](/screenshots/ss (6).png)
+
 ![](/screenshots/ss (7).png)
+
 ![](/screenshots/ss (8).png)
+
 ![](/screenshots/ss (9).png)
+
 ![](/screenshots/ss (10).png)
+
 ![](/screenshots/ss (11).png)
+
+![](/screenshots/ss (1).png)
+
+![](/screenshots/ss (2).png)
+
+![](/screenshots/ss (3).png)
+
+![](/screenshots/ss (4).png)
+
+![](/screenshots/ss (5).png)
+
+![](/screenshots/ss (6).png)
